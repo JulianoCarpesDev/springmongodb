@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Configuration;
 
 import com.julianocarpes.springmongo.domain.Post;
 import com.julianocarpes.springmongo.domain.User;
+import com.julianocarpes.springmongo.dto.PostDTO;
 import com.julianocarpes.springmongo.repositories.PostRepository;
 import com.julianocarpes.springmongo.repositories.UserRepository;
 
@@ -38,9 +39,11 @@ public class Instantiation implements CommandLineRunner{
 		User alex = new User(null, "Alex Green", "alex@gmail.com");
 		User bob = new User(null, "Bob Grey", "bob@gmail.com");
 		
-		Post post1 = new Post(null,sdf.parse("02/05/2023"), "Viagem", "Indo para Paris", maria);
-		Post post2 = new Post(null, sdf.parse("03/05/2023"), "Em Paris", "Curtindo Paris", maria);
 		userRepository.saveAll(Arrays.asList(maria,alex,bob));
+		
+		Post post1 = new Post(null,sdf.parse("02/05/2023"), "Viagem", "Indo para Paris",new PostDTO( maria));
+		Post post2 = new Post(null, sdf.parse("03/05/2023"), "Em Paris", "Curtindo Paris",new PostDTO( maria));
+		
 		postRepository.saveAll(Arrays.asList(post1,post2));
 	}
 
