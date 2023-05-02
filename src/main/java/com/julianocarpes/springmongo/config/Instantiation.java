@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Configuration;
 
 import com.julianocarpes.springmongo.domain.Post;
 import com.julianocarpes.springmongo.domain.User;
+import com.julianocarpes.springmongo.dto.CommentDTO;
 import com.julianocarpes.springmongo.dto.PostDTO;
 import com.julianocarpes.springmongo.repositories.PostRepository;
 import com.julianocarpes.springmongo.repositories.UserRepository;
@@ -44,11 +45,20 @@ public class Instantiation implements CommandLineRunner{
 		Post post1 = new Post(null,sdf.parse("02/05/2023"), "Viagem", "Indo para Paris",new PostDTO( maria));
 		Post post2 = new Post(null, sdf.parse("03/05/2023"), "Em Paris", "Curtindo Paris",new PostDTO( maria));
 		
-		postRepository.saveAll(Arrays.asList(post1,post2));
 		
+		
+		CommentDTO c1 = new CommentDTO("Boa viagem mano", sdf.parse("02/05/2023"),new PostDTO(alex));
+		CommentDTO c2 = new CommentDTO("Aproveite", sdf.parse("02/05/2023"),new PostDTO(bob));
+		CommentDTO c3 = new CommentDTO("Que massa!", sdf.parse("03/05/2023"),new PostDTO(alex));
+		
+		post1.getComments().addAll(Arrays.asList(c1,c2));
+		post2.getComments().addAll(Arrays.asList(c3));
+		postRepository.saveAll(Arrays.asList(post1,post2));
 		maria.getPosts().add(post1);
 		maria.getPosts().add(post2);
 		userRepository.save(maria);
+		
+		
 	}
 
 }
